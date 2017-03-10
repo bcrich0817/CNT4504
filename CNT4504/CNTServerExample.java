@@ -29,6 +29,11 @@ import java.net.Socket;
  * reads a request number and responds to that request
  */
 public class CNTServerExample {
+	Socket cSocket;
+	MultiThreadServer(Socket mSocket){
+		cSocket = mSocket;
+	}
+	
     public static void main(String[] args) throws IOException {
 		//Get input for socket number
 		int portNum = Integer.parseInt(args[0]);
@@ -38,10 +43,12 @@ public class CNTServerExample {
 
 		// Create the socket and bind to port number 1234
         ServerSocket listener = new ServerSocket(portNum);
-        
+        	while(true){
 		// Listen for client connections, this will block waiting for a connection
 		Socket socket = listener.accept();
 		System.out.println("Accepted Client connection");
+		new Thread(new MultiThreadServer((socket)).start();
+		}
 
 		// Attach a buffered reader to the socket's input stream
 		BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
